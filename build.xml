@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project name="binary image de-nosiong" default="run">
+    <description>Build file for the project</description>
+
+    <property name="srcDir" location="src" />
+    <property name="buildDir" location="build/classes" />
+    <property name="distDir" location="dist" />
+    <property name="picDir" location="pic" />
+    <property name="classname" value="ImageRunner" />
+    <property name="picName" value="test.jpg" />
+    <property name="biPicName" value="test_bi.jpg" />
+
+    <!-- Clean old dir if exist. -->
+    <target name="clean">
+        <delete dir="${buildDir}" />
+        <delete dir="${distDir}" />
+    </target>
+
+    <!-- Make new dir. -->
+    <target name="init" depends="clean">
+        <mkdir dir="${buildDir}" />
+    </target>
+
+    <!-- Compile java file. -->
+    <target name="compile" depends="init">
+        <javac srcDir="${srcDir}"
+               destdir="${buildDir}"
+               debug="true"
+               includeantruntime="on" />
+    </target>
+
+    <!-- Run the program. -->
+    <target name="run" depends="compile">
+        <java classname="${classname}">
+            <classpath>
+                <pathelement path="${buildDir}" />
+            </classpath>
+        </java>
+    </target>
+
+    <!-- Package into jar file. -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${distDir}" />
+        <jar destfile="${distDir}/${classname}.jar"
+             basedir="${buildDir}">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Main-Class" value="${classname}" />
+            </manifest>
+        </jar>
+    </target>
+
+</project>
