@@ -23,7 +23,7 @@ public class ImageDeNoise {
   };
 
   /* The time of reduce noise. */
-  private static final int DENOISE_TIME = 10;
+  private static final int DENOISE_TIME = 1;
 
   /* File information. */
   private String objectFileName, pictureType;
@@ -86,7 +86,7 @@ public class ImageDeNoise {
         e2 += xi * yi;
       }
     }
-    return -1.0 * e1 - 2.1 * e2;
+    return -1.0 * (double) e1 - 2.1 * (double) e2;
   }
 
   /**

@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
-<project name="binary image de-nosiong" default="run">
-    <description>Build file for the project</description>
+<!--
+     Author: Jiwei Wei
+     Copyright: Jiewei Wei.
+     date: 2014.11.16
+-->
+<project name="myProject" default="run">
+    <description>The build file for the project.</description>
 
+    <!-- Define global variable. -->
     <property name="srcDir" location="src" />
+    <property name="testDir" location="test" />
     <property name="buildDir" location="build/classes" />
     <property name="distDir" location="dist" />
-    <property name="picDir" location="pic" />
     <property name="classname" value="ImageRunner" />
-    <property name="picName" value="test.jpg" />
-    <property name="biPicName" value="test_bi.jpg" />
+    <property name="testclassname" value="ImageTest" />
 
     <!-- Clean old dir if exist. -->
     <target name="clean">
@@ -21,7 +26,7 @@
         <mkdir dir="${buildDir}" />
     </target>
 
-    <!-- Compile java file. -->
+    <!-- Compile main java file. -->
     <target name="compile" depends="init">
         <javac srcDir="${srcDir}"
                destdir="${buildDir}"
@@ -29,9 +34,26 @@
                includeantruntime="on" />
     </target>
 
-    <!-- Run the program. -->
+    <!-- Run the main program. -->
     <target name="run" depends="compile">
         <java classname="${classname}">
+            <classpath>
+                <pathelement path="${buildDir}" />
+            </classpath>
+        </java>
+    </target>
+
+    <!-- Compile test java file. -->
+    <target name="testcompile" depends="init">
+        <javac srcDir="${testDir}"
+               destdir="${buildDir}"
+               debug="true"
+               includeantruntime="on" />
+    </target>
+
+    <!-- Run the test program. -->
+    <target name="test" depends="testcompile">
+        <java classname="${testclassname}">
             <classpath>
                 <pathelement path="${buildDir}" />
             </classpath>
